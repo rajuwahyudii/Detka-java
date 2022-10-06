@@ -1,5 +1,6 @@
 # Aplikasi Detka (Deteksi Marka)
 
+Aplikasi pendeteksi marka adalah aplikasi yang bertujuan untuk memberikan edukasi pengguna jalan terhadap marka jalan yang ada di indonesia, aplikasi detka dapat mendeteksi marka dan pelanggaran marka serta menjelaskan pelanggaran dan makna dari marka itu sendiri lewat voice.
 
 
 <br>
