@@ -46,14 +46,14 @@ import java.util.PriorityQueue;
 public class Yolov5TFLiteDetector {
 
     private final Size INPNUT_SIZE = new Size(320, 320);
-    private final int[] OUTPUT_SIZE = new int[]{1, 6300, 85};
+    private final int[] OUTPUT_SIZE = new int[]{1, 6300, 196};
     private Boolean IS_INT8 = false;
     private final float DETECT_THRESHOLD = 0.25f;
     private final float IOU_THRESHOLD = 0.45f;
     private final float IOU_CLASS_DUPLICATED_THRESHOLD = 0.7f;
-    private final String MODEL_YOLOV5S = "yolov5s-fp16-320-metadata.tflite";
+    private final String MODEL_YOLOV5S = "best-fp16-320.tflite";
 //    private final String MODEL_YOLOV5S = "yolov5s-dynamic.tflite";
-    private final String MODEL_YOLOV5N =  "yolov5n-fp16-320.tflite";
+    private final String MODEL_YOLOV5N =  "fix.tflite";
     private final String MODEL_YOLOV5M = "yolov5m-fp16-320.tflite";
     private final String MODEL_YOLOV5S_INT8 = "yolov5s-int8-320.tflite";
     private final String LABEL_FILE = "coco_label.txt";
@@ -77,18 +77,18 @@ public class Yolov5TFLiteDetector {
                 break;
             case "yolov5n":
                 IS_INT8 = false;
-                MODEL_FILE = MODEL_YOLOV5N;
+                MODEL_FILE = MODEL_YOLOV5S;
                 break;
             case "yolov5m":
                 IS_INT8 = false;
-                MODEL_FILE = MODEL_YOLOV5M;
+                MODEL_FILE = MODEL_YOLOV5S;
                 break;
             case "yolov5s-int8":
-                IS_INT8 = true;
-                MODEL_FILE = MODEL_YOLOV5S_INT8;
+                IS_INT8 = false;
+                MODEL_FILE = MODEL_YOLOV5S;
                 break;
-            default:
-                Log.i("tfliteSupport", "Only yolov5s/n/m/sint8 can be load!");
+//            default:
+//                Log.i("tfliteSupport", "Only yolov5s/n/m/sint8 can be load!");
         }
     }
 
@@ -363,14 +363,14 @@ public class Yolov5TFLiteDetector {
         NnApiDelegate nnApiDelegate = null;
         // Initialize interpreter with NNAPI delegate for Android Pie or above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//            NnApiDelegate.Options nnApiOptions = new NnApiDelegate.Options();
-//            nnApiOptions.setAllowFp16(true);
-//            nnApiOptions.setUseNnapiCpu(true);
+            NnApiDelegate.Options nnApiOptions = new NnApiDelegate.Options();
+            nnApiOptions.setAllowFp16(true);
+            nnApiOptions.setUseNnapiCpu(true);
             //ANEURALNETWORKS_PREFER_LOW_POWER：倾向于以最大限度减少电池消耗的方式执行。这种设置适合经常执行的编译。
             //ANEURALNETWORKS_PREFER_FAST_SINGLE_ANSWER：倾向于尽快返回单个答案，即使这会耗费更多电量。这是默认值。
             //ANEURALNETWORKS_PREFER_SUSTAINED_SPEED：倾向于最大限度地提高连续帧的吞吐量，例如，在处理来自相机的连续帧时。
-//            nnApiOptions.setExecutionPreference(NnApiDelegate.Options.EXECUTION_PREFERENCE_SUSTAINED_SPEED);
-//            nnApiDelegate = new NnApiDelegate(nnApiOptions);
+            nnApiOptions.setExecutionPreference(NnApiDelegate.Options.EXECUTION_PREFERENCE_SUSTAINED_SPEED);
+            nnApiDelegate = new NnApiDelegate(nnApiOptions);
             nnApiDelegate = new NnApiDelegate();
             options.addDelegate(nnApiDelegate);
             Log.i("tfliteSupport", "using nnapi delegate.");

@@ -3,7 +3,10 @@ plugins {
 }
 
 android {
-    compileSdk 29
+    aaptOptions {
+        noCompress "best-fp-320.tflite"
+    }
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.example.yolov5tfliteandroid"
@@ -25,9 +28,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    androidResources {
+        noCompress 'assets/fix.tflite'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
 }
 
 dependencies {
+
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     // Import tflite dependencies
     // implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
     implementation 'org.tensorflow:tensorflow-lite:2.8.0'
@@ -37,6 +50,8 @@ dependencies {
     // implementation 'org.tensorflow:tensorflow-lite-support:0.0.0-nightly-SNAPSHOT'
     implementation 'org.tensorflow:tensorflow-lite-support:0.3.1'
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.3.1'
+    implementation 'androidx.navigation:navigation-fragment:2.5.2'
+    implementation 'androidx.navigation:navigation-ui:2.5.2'
 
     def camerax_version = "1.0.0-beta07"
     implementation "androidx.camera:camera-camera2:$camerax_version"

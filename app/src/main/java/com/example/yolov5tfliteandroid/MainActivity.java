@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             this.yolov5TFLiteDetector = new Yolov5TFLiteDetector();
             this.yolov5TFLiteDetector.setModelFile(modelName);
 //            this.yolov5TFLiteDetector.addNNApiDelegate();
-            this.yolov5TFLiteDetector.addGPUDelegate();
+            this.yolov5TFLiteDetector.addNNApiDelegate();
             this.yolov5TFLiteDetector.initialModel(this);
             Log.i("model", "Success loading model" + this.yolov5TFLiteDetector.getModelFile());
         } catch (Exception e) {
