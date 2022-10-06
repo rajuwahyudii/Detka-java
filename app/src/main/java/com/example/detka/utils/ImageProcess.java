@@ -1,11 +1,10 @@
-package com.example.yolov5tfliteandroid.utils;
+package com.example.detka.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.util.Log;
 import android.util.Size;
 
-import androidx.annotation.Nullable;
 import androidx.camera.core.ImageProxy;
 
 import org.tensorflow.lite.DataType;

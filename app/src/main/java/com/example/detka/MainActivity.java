@@ -1,7 +1,6 @@
-package com.example.yolov5tfliteandroid;
+package com.example.detka;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.camera.view.PreviewView;
 
 import android.graphics.Color;
@@ -19,10 +18,10 @@ import android.widget.Toast;
 
 import androidx.camera.lifecycle.ProcessCameraProvider;
 
-import com.example.yolov5tfliteandroid.analysis.FullImageAnalyse;
-import com.example.yolov5tfliteandroid.analysis.FullScreenAnalyse;
-import com.example.yolov5tfliteandroid.detector.Yolov5TFLiteDetector;
-import com.example.yolov5tfliteandroid.utils.CameraProcess;
+import com.example.detka.analysis.FullImageAnalyse;
+import com.example.detka.analysis.FullScreenAnalyse;
+import com.example.detka.detector.Yolov5TFLiteDetector;
+import com.example.detka.utils.CameraProcess;
 import com.google.common.util.concurrent.ListenableFuture;
 
 public class MainActivity extends AppCompatActivity {

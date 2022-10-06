@@ -1,23 +1,19 @@
-package com.example.yolov5tfliteandroid.detector;
+package com.example.detka.detector;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
-import android.os.Binder;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.Log;
 import android.util.Size;
 import android.widget.Toast;
 
-import com.example.yolov5tfliteandroid.MainActivity;
-import com.example.yolov5tfliteandroid.utils.Recognition;
+import com.example.detka.utils.Recognition;
 
-import org.checkerframework.checker.nullness.Opt;
-import org.checkerframework.checker.units.qual.C;
 import org.tensorflow.lite.DataType;
-import org.tensorflow.lite.Delegate;
 import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.InterpreterFactory;
 import org.tensorflow.lite.gpu.GpuDelegate;
 import org.tensorflow.lite.gpu.CompatibilityList;
 import org.tensorflow.lite.nnapi.NnApiDelegate;
@@ -32,7 +28,6 @@ import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.metadata.MetadataExtractor;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
-import org.tensorflow.lite.support.metadata.MetadataParser;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -44,7 +39,8 @@ import java.util.PriorityQueue;
 
 
 public class Yolov5TFLiteDetector {
-
+    MediaPlayer player;
+    int number = 0;
     private final Size INPNUT_SIZE = new Size(320, 320);
     private final int[] OUTPUT_SIZE = new int[]{1, 6300, 196};
     private Boolean IS_INT8 = false;
@@ -399,5 +395,23 @@ public class Yolov5TFLiteDetector {
     public void addThread(int thread) {
         options.setNumThreads(thread);
     }
+    public void play(int index, int posisi){
+        String audio1 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/putus.mp3?alt=media&token=3c8efefd-f5f1-455e-9ace-8c2e21e95d92";
+        String audio2 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/membujur%20penuh.mp3?alt=media&token=7fc6837e-941e-4537-a0b8-0282cade2a4d";
+        String audio3 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/simbol-panah.mp3?alt=media&token=cd62c785-dced-47f3-9665-94084c9343e4";
+        String audio4 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/cevron%20line.mp3?alt=media&token=49f35306-ddc3-45a6-a708-012dd7c19e4f";
+        String audio5 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/cevron%20line.mp3?alt=media&token=49f35306-ddc3-45a6-a708-012dd7c19e4f";
+        String audio6 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/pelanggaran.mp3?alt=media&token=2335de09-cfb2-4169-990c-8868cadc70a9";
 
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        try {
+            player.setDataSource("audio"+index);
+            player.prepare();
+            player.start();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

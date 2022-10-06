@@ -1,4 +1,4 @@
-package com.example.yolov5tfliteandroid.utils;
+package com.example.detka.utils;
 
 import android.graphics.RectF;
 

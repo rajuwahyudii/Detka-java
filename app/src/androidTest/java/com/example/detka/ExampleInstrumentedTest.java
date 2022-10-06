@@ -1,4 +1,4 @@
-package com.example.yolov5tfliteandroid;
+package com.example.detka;
 
 import android.content.Context;
 

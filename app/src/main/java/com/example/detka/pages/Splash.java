@@ -1,4 +1,4 @@
-package com.example.yolov5tfliteandroid.pages;
+package com.example.detka.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.yolov5tfliteandroid.R;
+import com.example.detka.R;
 
 public class Splash extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.yolov5tfliteandroid.pages;
+package com.example.detka.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,20 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.yolov5tfliteandroid.R;
+import com.example.detka.MainActivity;
+import com.example.detka.R;
 
-public class Introduction extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_introduction);
-
-        button = (Button) findViewById(R.id.intro1);
+        setContentView(R.layout.activity_home);
+        button = (Button) findViewById(R.id.berangkatBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Introduction.this, HomeActivity.class);
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
