@@ -26,5 +26,8 @@ Teknologi yang digunakan
 Berikut UI dari aplikasi ini : 
 
 <div align = center>
-<img src="" width="230">
+<img src="https://github.com/rajuwahyudii/Detka-java/blob/master/splash.png" width="230">
+<img src="https://github.com/rajuwahyudii/Detka-java/blob/master/introduction.png" width="230">
+<img src="https://github.com/rajuwahyudii/Detka-java/blob/master/main.png" width="230">
+<img src="https://github.com/rajuwahyudii/Detka-java/blob/master/deteksi.png" width="230">
 </div>
