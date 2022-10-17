@@ -1,0 +1,13 @@
+arrow forward
+arrow forward and left
+arrow forward and right
+arrow left
+arrow right
+cevron line
+continous line
+doted line
+double continous line
+double doted line
+double half line
+zebra cross
+

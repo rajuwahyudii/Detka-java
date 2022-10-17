@@ -46,6 +46,7 @@ public class Recognition {
         return new RectF(location);
     }
 
+
     public void setLocation(RectF location) {
         this.location = location;
     }
@@ -61,6 +62,9 @@ public class Recognition {
     public void setConfidence(Float confidence) {
         this.confidence = confidence;
     }
+
+
+
 
     @Override
     public String toString() {

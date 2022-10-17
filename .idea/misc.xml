@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USER/Documents/Project/Kotlin/Detka-java/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2055" />
+        <entry key="..\:/Users/USER/Documents/Project/Kotlin/Detka-java/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2055" />
+        <entry key="..\:/Users/USER/Documents/Project/Kotlin/Detka-java/app/src/main/res/drawable/ic_splash_screen.xml" value="0.2055" />
+        <entry key="..\:/Users/USER/Documents/Project/Kotlin/Detka-java/app/src/main/res/layout/activity_main.xml" value="0.4697554697554698" />
         <entry key="..\:/Users/USER/Documents/Project/Kotlin/yolov5-tflite-android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1455" />
         <entry key="..\:/Users/USER/Documents/Project/Kotlin/yolov5-tflite-android/app/src/main/res/drawable/ic_splash_screen.xml" value="0.1455" />
         <entry key="..\:/Users/USER/Documents/Project/Kotlin/yolov5-tflite-android/app/src/main/res/font/poppins.xml" value="0.1875" />

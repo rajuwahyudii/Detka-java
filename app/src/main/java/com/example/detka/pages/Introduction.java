@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.detka.R;
+import com.example.detka.detector.Yolov5TFLiteDetector;
 
 import java.io.IOException;
 
@@ -26,8 +27,9 @@ public class Introduction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Introduction.this, HomeActivity.class);
+
                 startActivity(intent);
-//                play(1);
+//
             }
         });
     }

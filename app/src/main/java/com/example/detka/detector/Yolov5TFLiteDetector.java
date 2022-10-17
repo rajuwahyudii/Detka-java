@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.util.Size;
 import android.widget.Toast;
 
+import com.example.detka.MainActivity;
 import com.example.detka.utils.Recognition;
 
 import org.tensorflow.lite.DataType;
@@ -39,20 +41,20 @@ import java.util.PriorityQueue;
 
 
 public class Yolov5TFLiteDetector {
-    MediaPlayer player;
+    static MediaPlayer player;
     int number = 0;
     private final Size INPNUT_SIZE = new Size(320, 320);
-    private final int[] OUTPUT_SIZE = new int[]{1, 6300, 196};
+    private  int[] OUTPUT_SIZE = new int[]{1, 6300, 196};
     private Boolean IS_INT8 = false;
-    private final float DETECT_THRESHOLD = 0.25f;
-    private final float IOU_THRESHOLD = 0.45f;
-    private final float IOU_CLASS_DUPLICATED_THRESHOLD = 0.7f;
+    private final float DETECT_THRESHOLD = 0.02f;
+    private final float IOU_THRESHOLD = 0.02f;
+    private final float IOU_CLASS_DUPLICATED_THRESHOLD = 0.1f;
     private final String MODEL_YOLOV5S = "best-fp16-320.tflite";
 //    private final String MODEL_YOLOV5S = "yolov5s-dynamic.tflite";
-    private final String MODEL_YOLOV5N =  "fix.tflite";
-    private final String MODEL_YOLOV5M = "yolov5m-fp16-320.tflite";
+    private final String MODEL_YOLOV5N =  "320-best-fp16.tflite";
+    private final String MODEL_YOLOV5M = "best-fp16-320.tflite";
     private final String MODEL_YOLOV5S_INT8 = "yolov5s-int8-320.tflite";
-    private final String LABEL_FILE = "coco_label.txt";
+    private  String LABEL_FILE = "model.txt";
     MetadataExtractor.QuantizationParams input5SINT8QuantParams = new MetadataExtractor.QuantizationParams(0.003921568859368563f, 0);
     MetadataExtractor.QuantizationParams output5SINT8QuantParams = new MetadataExtractor.QuantizationParams(0.006305381190031767f, 5);
     private String MODEL_FILE;
@@ -67,22 +69,26 @@ public class Yolov5TFLiteDetector {
 
     public void setModelFile(String modelFile){
         switch (modelFile) {
-            case "yolov5s":
+            case "model1":
+                OUTPUT_SIZE = new int[]{1, 6300, 196};
                 IS_INT8 = false;
                 MODEL_FILE = MODEL_YOLOV5S;
+                LABEL_FILE = "model.txt";
                 break;
-            case "yolov5n":
+            case "model2":
                 IS_INT8 = false;
-                MODEL_FILE = MODEL_YOLOV5S;
+                OUTPUT_SIZE = new int[]{1, 6300, 197};
+                MODEL_FILE = MODEL_YOLOV5N;
+                LABEL_FILE = "modell.txt";
                 break;
-            case "yolov5m":
-                IS_INT8 = false;
-                MODEL_FILE = MODEL_YOLOV5S;
-                break;
-            case "yolov5s-int8":
-                IS_INT8 = false;
-                MODEL_FILE = MODEL_YOLOV5S;
-                break;
+//            case "yolov5m":
+//                IS_INT8 = false;
+//                MODEL_FILE = MODEL_YOLOV5M;
+//                break;
+//            case "yolov5s-int8":
+//                IS_INT8 = false;
+//                MODEL_FILE = MODEL_YOLOV5M;
+//                break;
 //            default:
 //                Log.i("tfliteSupport", "Only yolov5s/n/m/sint8 can be load!");
         }
@@ -198,9 +204,11 @@ public class Yolov5TFLiteDetector {
                 if (classScores[j] > maxLabelScores) {
                     maxLabelScores = classScores[j];
                     labelId = j;
+
+
                 }
             }
-
+//
 
             Recognition r = new Recognition(
                     labelId,
@@ -210,7 +218,9 @@ public class Yolov5TFLiteDetector {
                     new RectF(xmin, ymin, xmax, ymax));
             allRecognitions.add(
                     r);
+
         }
+
 //        Log.i("tfliteSupport", "recognize data size: "+allRecognitions.size());
 
         // 非极大抑制输出
@@ -219,7 +229,7 @@ public class Yolov5TFLiteDetector {
         ArrayList<Recognition> nmsFilterBoxDuplicationRecognitions = nmsAllClass(nmsRecognitions);
 
         // 更新label信息
-        for(Recognition recognition : nmsFilterBoxDuplicationRecognitions){
+        for(Recognition recognition : nmsFilterBoxDuplicationRecognitions) {
             int labelId = recognition.getLabelId();
             String labelName = associatedAxisLabels.get(labelId);
             recognition.setLabelName(labelName);
@@ -242,7 +252,7 @@ public class Yolov5TFLiteDetector {
             // 这里为每个类别做一个队列, 把labelScore高的排前面
             PriorityQueue<Recognition> pq =
                     new PriorityQueue<Recognition>(
-                            6300,
+                            6400,
                             new Comparator<Recognition>() {
                                 @Override
                                 public int compare(final Recognition l, final Recognition r) {
@@ -291,7 +301,7 @@ public class Yolov5TFLiteDetector {
 
         PriorityQueue<Recognition> pq =
                 new PriorityQueue<Recognition>(
-                        100,
+                        10,
                         new Comparator<Recognition>() {
                             @Override
                             public int compare(final Recognition l, final Recognition r) {
@@ -349,6 +359,7 @@ public class Yolov5TFLiteDetector {
     protected float boxUnion(RectF a, RectF b) {
         float i = boxIntersection(a, b);
         float u = (a.right - a.left) * (a.bottom - a.top) + (b.right - b.left) * (b.bottom - b.top) - i;
+
         return u;
     }
 
@@ -369,7 +380,10 @@ public class Yolov5TFLiteDetector {
             nnApiDelegate = new NnApiDelegate(nnApiOptions);
             nnApiDelegate = new NnApiDelegate();
             options.addDelegate(nnApiDelegate);
+            addThread(1);
             Log.i("tfliteSupport", "using nnapi delegate.");
+        }else {
+            addThread(1);
         }
     }
 
@@ -382,9 +396,10 @@ public class Yolov5TFLiteDetector {
             GpuDelegate.Options delegateOptions = compatibilityList.getBestOptionsForThisDevice();
             GpuDelegate gpuDelegate = new GpuDelegate(delegateOptions);
             options.addDelegate(gpuDelegate);
+            addThread(1);
             Log.i("tfliteSupport", "using gpu delegate.");
         } else {
-            addThread(4);
+            addThread(1);
         }
     }
 
@@ -395,23 +410,32 @@ public class Yolov5TFLiteDetector {
     public void addThread(int thread) {
         options.setNumThreads(thread);
     }
-    public void play(int index, int posisi){
+
+    public  void play(int index, int posisi, int number){
         String audio1 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/putus.mp3?alt=media&token=3c8efefd-f5f1-455e-9ace-8c2e21e95d92";
         String audio2 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/membujur%20penuh.mp3?alt=media&token=7fc6837e-941e-4537-a0b8-0282cade2a4d";
         String audio3 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/simbol-panah.mp3?alt=media&token=cd62c785-dced-47f3-9665-94084c9343e4";
         String audio4 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/cevron%20line.mp3?alt=media&token=49f35306-ddc3-45a6-a708-012dd7c19e4f";
         String audio5 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/cevron%20line.mp3?alt=media&token=49f35306-ddc3-45a6-a708-012dd7c19e4f";
         String audio6 = "https://firebasestorage.googleapis.com/v0/b/detka-60b41.appspot.com/o/pelanggaran.mp3?alt=media&token=2335de09-cfb2-4169-990c-8868cadc70a9";
-
+        String song = audio1;
         player = new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-        try {
-            player.setDataSource("audio"+index);
-            player.prepare();
-            player.start();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+//        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        MediaPlayer player = MediaPlayer.create(null, Uri.parse(index == 1 ? audio1:index == 2 ? audio2 : index == 3 ? audio3 : index ==4 ? audio4 : index ==5 ? audio5 : audio6));
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+            }
+        });
+//        try {
+//            player.setDataSource("audio1");
+//            player.prepare();
+//            player.start();
+//        }catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }

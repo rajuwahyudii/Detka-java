@@ -2,10 +2,8 @@
     <string name="app_name">Detka</string>
 
     <string-array name="model">
-        <item>yolov5s</item>
-        <item>yolov5n </item>
-        <item>yolov5m</item>
-        <item>yolov5s-int8</item>
+        <item>model1</item>
+        <item>model2</item>
     </string-array>
     <string name="title_activity_splash">SplashActivity</string>
     <!-- Strings used for fragments for navigation -->

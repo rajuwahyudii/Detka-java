@@ -120,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
         cameraProcess.showCameraSupportSize(MainActivity.this);
 
         // 初始化加载yolov5s
-        initModel("yolov5s");
+        initModel("model1");
+
+
 
         // 监听模型切换按钮
         modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
